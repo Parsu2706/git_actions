@@ -1,0 +1,35 @@
+name: Testing Workflow
+on: 
+  push: 
+    branches: 
+      - main 
+
+  pull_request: 
+    branches: 
+      - main 
+
+
+jobs: 
+  test:     #Job name 
+    runs-on: ubuntu-latest  # Machine on which the job runs 
+
+    steps:  #steps that should be executed 
+    #step 1 : Check the code 
+      - name: check code  
+        uses: actions/checkout@v4 
+    #Step 2 : Setup the python envirobment mention the python version using with
+      - name: setup python 
+        uses: actions/setup-python@v5
+        with: 
+            python-version : '3.10'
+    
+    #step 3 : 
+      - name: download all dependencies 
+        run: |
+          python -m pip install --upgrade pip 
+          pip install -r requirements.txt
+
+    #step 4 : Run the test 
+      - name: run tests 
+        run: 
+          pytest
